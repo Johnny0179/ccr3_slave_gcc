@@ -42,6 +42,10 @@ int main()
   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
   LED_Init();
 
+  // teset
+  LED0 = 0;
+  LED1 = 0;
+
   // init the system delay
   delay_init(168);
 
@@ -62,15 +66,16 @@ void start_task(void *pvParameters)
   taskENTER_CRITICAL();
 
   // creat modbus task
-      xTaskCreate((TaskFunction_t)Modbus_task, (const char *)"Modbus_task",
-                  (uint16_t)Modbus_STK_SIZE, (void *)NULL,
-                  (UBaseType_t)Modbus_TASK_PRIO,
-                  (TaskHandle_t *)&ModbusTask_Handler);
+  xTaskCreate((TaskFunction_t)Modbus_task, (const char *)"Modbus_task",
+              (uint16_t)Modbus_STK_SIZE, (void *)NULL,
+              (UBaseType_t)Modbus_TASK_PRIO,
+              (TaskHandle_t *)&ModbusTask_Handler);
+
   // CAN test
-      xTaskCreate((TaskFunction_t)CanTest_task, (const char *)"CanTest_task",
-                  (uint16_t)CanTest_STK_SIZE, (void *)NULL,
-                  (UBaseType_t)CanTest_TASK_PRIO,
-                  (TaskHandle_t *)&CanTestTask_Handler);
+  xTaskCreate((TaskFunction_t)CanTest_task, (const char *)"CanTest_task",
+              (uint16_t)CanTest_STK_SIZE, (void *)NULL,
+              (UBaseType_t)CanTest_TASK_PRIO,
+              (TaskHandle_t *)&CanTestTask_Handler);
 
   vTaskDelete(StartTask_Handler);
   taskEXIT_CRITICAL();

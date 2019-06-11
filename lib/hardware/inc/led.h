@@ -13,8 +13,8 @@ extern "C"
 #define LED1 PEout(3)
 #define LED2 PFout(9)
 
-    //函数声明
-    void LED_Init(void); //初始化
+//初始化
+void LED_Init(void);
 
 #ifdef __cplusplus
 }
